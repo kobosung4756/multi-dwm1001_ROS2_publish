@@ -5,7 +5,7 @@
 2. **DWM1001-Firmware-User-Guide.pdf** (3장 참고) 와
    **DWM1001_Gateway_Quick_Deployment_Guide.pdf** (1~3장 참고) 에 따라 dwm1001-dev 초기셋팅(tag, anchor 지정)을 진행.
 
-3. **DWM1001-API-Guide.pdf** (6.40 aurs 참고) 하여 tag 수신 hz 셋팅
+3. **DWM1001-API-Guide.pdf** (6.40장 aurs 참고) 하여 tag 수신 hz 셋팅
 
 4. Android 태블릿 앱 **DRTLS** 에서(APK로 다운 가능) tag와 anchor를 network로 묶고, 아래 ROS2 publisher 만들기 진행.
 
