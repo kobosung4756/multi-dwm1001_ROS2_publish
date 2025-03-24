@@ -9,7 +9,7 @@
 
 4. Android 태블릿 앱 **DRTLS** 에서(APK로 다운 가능) tag와 anchor를 network로 묶고, 아래 ROS2 publisher 만들기 진행.
 
-### 📁 파일 트리구조
+### 📁 파일 트리 구조
 ```plaintext
 ~/ros2_ws/
 ├── install/
@@ -64,21 +64,6 @@ cd ~/ros2_ws/src/uwb_visualizer/uwb_visualizer
           ├── __init__.py
           └── uwb_tag_publisher.py
 ```
-패키지 루트 디렉터리로 이동
-```bash
-cd ~/ros2_ws/src/uwb_visualizer
-```
-setup.py 파일 entry_points 항목 수정
-파일 내 entry_points 부분에 아래 내용을 추가합니다.
-```python
-entry_points={
-    'console_scripts': [
-        'uwb_tag_publisher = uwb_visualizer.uwb_tag_publisher:main'
-    ],
-},
-```
-여기서 'uwb_tag_publisher'는 실행 시 사용할 명령어 이름이며,
-uwb_visualizer.uwb_tag_publisher:main은 패키지 내의 모듈 경로와 main() 함수를 지정합니다.
 
 워크스페이스 src로 이동
 ```bash
@@ -93,6 +78,49 @@ cd ~/ros2_ws/src
     ├── dwm1001.py        # dwm1001 코드 파일 복붙
     └── uwb_visualizer/
 ```
+
+launch 파일을 위한 폴더를 생성
+```bash
+mkdir ~/ros2_ws/src/uwb_visualizer/launch
+```
+다수의 tag 데이터를 동시에 publish하기 위한 노드 launch 파일(multi_tag.launch.py)을 추가합니다.
+
+launch 파일을 추가한 파일 트리는 다음과 같습니다.
+```plaintext
+└── src/
+    ├── dwm1001.py                         
+    └── uwb_visualizer/                    
+         ├── package.xml
+         ├── setup.py                      
+         ├── launch/
+         │    └── multi_tag.launch.py    # multi_tag.launch.py 코드 파일 복붙
+```    
+
+패키지 루트 디렉토리로 이동
+```bash
+cd ~/ros2_ws/src/uwb_visualizer
+```
+setup.py 파일에서 launch 폴더 포함하도록 & entry_points 항목 수정
+
+launch 폴더 포함하도록 파일 내 data_files 부분에 아래 내용을 추가합니다.
+```python
+data_files=[
+        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+        ('share/' + package_name + '/launch', ['launch/multi_tag.launch.py']),
+    ],
+```
+파일 내 entry_points 부분에 아래 내용을 추가합니다.
+```python
+entry_points={
+    'console_scripts': [
+        'uwb_tag_publisher = uwb_visualizer.uwb_tag_publisher:main'
+    ],
+},
+```
+여기서 'uwb_tag_publisher'는 실행 시 사용할 명령어 이름이며,
+uwb_visualizer.uwb_tag_publisher:main은 패키지 내의 모듈 경로와 main() 함수를 지정합니다.
+
 워크스페이스 루트로 이동
 ```bash
 cd ~/ros2_ws
